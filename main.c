@@ -6,7 +6,7 @@
 
 int main (void)
 {
-  // set the data direction register make all pins on port B output pins
+  // set the data direction register to make all pins on port B output pins
   DDRB = 0b11111111;
 
   while (1) {
