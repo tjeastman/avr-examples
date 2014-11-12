@@ -11,7 +11,7 @@ main.elf: main.o
 	$(CC) -mmcu=atmega328p -o main.elf main.o
 
 main.o: main.c
-	$(CC) $(CFLAGS) main.c
+	$(CC) $(CFLAGS) -o main.o main.c
 
 flash: main.hex
 	avrdude -p m328p -c usbtiny -P usb -U flash:w:main.hex
