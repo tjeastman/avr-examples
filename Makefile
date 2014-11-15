@@ -1,13 +1,14 @@
 CC = avr-gcc
 OBJCOPY = avr-objcopy
+DEVICE = atmega328p
 F_CPU = 16000000L
-CFLAGS = -DF_CPU=$(F_CPU) -mmcu=atmega328p -Os -c
+CFLAGS = -DF_CPU=$(F_CPU) -mmcu=$(DEVICE) -Os -c
 
 %.hex: %.elf
 	$(OBJCOPY) -j .text -j .data -O ihex $< $@
 
 %.elf: %.o
-	$(CC) -mmcu=atmega328p -o $@ $<
+	$(CC) -mmcu=$(DEVICE) -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ $<
