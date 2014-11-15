@@ -20,3 +20,5 @@ flash: main.hex
 
 clean:
 	$(RM) main.hex main.elf main.o
+
+.PHONY: all flash clean
