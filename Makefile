@@ -1,17 +1,18 @@
 CC = avr-gcc
+OBJCOPY = avr-objcopy
 F_CPU = 16000000L
 CFLAGS = -DF_CPU=$(F_CPU) -mmcu=atmega328p -Os -c
 
+%.hex: %.elf
+	$(OBJCOPY) -j .text -j .data -O ihex $< $@
+
+%.elf: %.o
+	$(CC) -mmcu=atmega328p -o $@ $<
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ $<
+
 all: main.hex
-
-main.hex: main.elf
-	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
-
-main.elf: main.o
-	$(CC) -mmcu=atmega328p -o main.elf main.o
-
-main.o: main.c
-	$(CC) $(CFLAGS) -o main.o main.c
 
 flash: main.hex
 	avrdude -p m328p -c usbtiny -P usb -U flash:w:main.hex
