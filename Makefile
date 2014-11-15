@@ -18,4 +18,4 @@ flash: main.hex
 	avrdude -p m328p -c usbtiny -P usb -U flash:w:main.hex
 
 clean:
-	rm main.hex main.elf main.o
+	$(RM) main.hex main.elf main.o
