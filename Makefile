@@ -16,7 +16,7 @@ CFLAGS = -DF_CPU=$(F_CPU) -mmcu=$(DEVICE) -Os -c
 all: main.hex
 
 flash: main.hex
-	avrdude -p m328p -c usbtiny -P usb -U flash:w:main.hex
+	avrdude -p $(DEVICE) -c usbtiny -P usb -U flash:w:main.hex
 
 clean:
 	$(RM) main.hex main.elf main.o
