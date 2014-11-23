@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <util/setbaud.h>
 #include <util/delay.h>
+#include <stdio.h>
 
 void uart_init(void) {
     UBRR0H = UBRRH_VALUE;
@@ -21,25 +22,19 @@ void uart_putchar(char c) {
   UDR0 = c;
 }
 
+int uart_putchar_printf(char c, FILE *stream) {
+  uart_putchar(c);
+  return 0;
+}
+
+FILE uart_output = FDEV_SETUP_STREAM(uart_putchar_printf, NULL, _FDEV_SETUP_WRITE);
+
 int main(void) {
   uart_init();
+  stdout = &uart_output;
 
   while (1) {
-    uart_putchar('H');
-    uart_putchar('e');
-    uart_putchar('l');
-    uart_putchar('l');
-    uart_putchar('o');
-    uart_putchar(',');
-    uart_putchar(' ');
-    uart_putchar('W');
-    uart_putchar('o');
-    uart_putchar('r');
-    uart_putchar('l');
-    uart_putchar('d');
-    uart_putchar('!');
-    uart_putchar('\r');
-    uart_putchar('\n');
+    printf("Hello, world!\r\n");
     _delay_ms(1000);
   }
 
